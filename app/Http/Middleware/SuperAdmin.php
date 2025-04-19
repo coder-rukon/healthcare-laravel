@@ -17,7 +17,7 @@ class SuperAdmin
     {
         $user = $request->user();
         if($user->role != 'superadmin') {
-            return '/';
+            return response('Pleact contact with admin to get admin access', 403);
         }
         return $next($request);
     }
