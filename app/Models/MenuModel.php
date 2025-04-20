@@ -11,6 +11,7 @@ class MenuModel extends Model
     protected $fillable = [
         'menu_name',
         'menu_link',
+        'location',
         'menu_link_target',
         'menu_order',
         'menu_parent'

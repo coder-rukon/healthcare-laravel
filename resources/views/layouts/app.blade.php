@@ -29,9 +29,61 @@
 
             <!-- Page Content -->
             <main>
-                {{ isset($slot) ? $slot : '' }}
+                
                 <div class="container">
-                    @yield('content')
+                    <div class="row">
+                        <div class="col-2">
+                            <ul class="list-group mt-4 ">
+                                <li class="list-group-item">
+                                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                                        {{ __('Dashboard') }}
+                                    </x-nav-link>
+                                </li>
+                                <li class="list-group-item">
+                                    <x-nav-link :href="route('admin.home')" :active="request()->routeIs('admin.home')">
+                                        {{ __('Home Sections') }}
+                                    </x-nav-link>
+                                </li>
+                                <li class="list-group-item">
+                                    <x-nav-link :href="route('settings')" :active="request()->routeIs('settings')">
+                                        {{ __('Header / Footer Settings') }}
+                                    </x-nav-link>
+                                </li>
+                                <li class="list-group-item">
+                                    <h5>{{ __('Menu') }}</h5>
+                                    <x-nav-link :href="route('admin.menu',['location' => 'Header Top Menu'])">
+                                        {{ __('Header Top Menu') }}
+                                    </x-nav-link>
+                                    <br/><x-nav-link :href="route('admin.menu',['location' => 'Main Menu'])">
+                                        {{ __('Main menu') }}
+                                    </x-nav-link> 
+                                    <br/><x-nav-link :href="route('admin.menu',['location' => 'Main Menu right'])">
+                                        {{ __('Main menu right') }}
+                                    </x-nav-link> 
+                                   
+                                    <br/><x-nav-link :href="route('admin.menu',['location' => 'Footer Quick Links'])">
+                                        {{ __('Footer Quick Links') }}
+                                    </x-nav-link>
+                                    <br/><x-nav-link :href="route('admin.menu',['location' => 'Footer Services'])">
+                                        {{ __('Footer Services') }}
+                                    </x-nav-link>
+                                    
+                                </li> 
+                                
+                              </ul>
+                            
+                            
+                        </div>
+                        <div class="col-10">
+                            <div class="mt-4 bg-white shadow-sm sm:rounded-lg p-4">
+                                @yield('content')
+                                {{ isset($slot) ? $slot : '' }}
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                
                 </div>
             </main>
         </div>

@@ -26,9 +26,20 @@
                     <img class="img-fluid" src="assets/images/logo.png" alt="Healthcare Scan Diagnostics">
                 </a>
                 <div class="top_menus">
-                    <a href="#">About Us</a>
-                    |
-                    <a href="#">Careers</a>
+                    @php
+                        $i = 0;
+                    @endphp
+                    @foreach ($menu as $item)
+                            @if ($item->location == 'Header Top Menu')
+                            @php
+                                $i++;
+                            @endphp
+                               @if ($i >= 2)
+                                 |  
+                               @endif
+                               <a href="{{ $item->menu_link }}" target="{{ $item->menu_link_target }}">{{ $item->menu_name }}</a>
+                            @endif
+                        @endforeach
                 </div>
             </div>
             <div class="header_right">
@@ -49,15 +60,18 @@
                 <div class="main_menus">
                     <ul>
                         @foreach ($menu as $item)
-                            {{ $target = $item->menu_link_target == '_blank' ? 'target="_blank"' : '' }}
-                            <li>
-                                <a href="{{ $item->menu_link }}" {{ $target }}>{{ $item->menu_name }}</a>
-                            </li>
+                            @if ($item->location == 'Main Menu')
+                                <li><a href="{{ $item->menu_link }}" target="{{ $item->menu_link_target }}">{{ $item->menu_name }}</a> </li>
+                            @endif
                         @endforeach
                     </ul>
                 </div>
                 <div class="nav_right">
-                    <a href="#">Contact Us</a>
+                    @foreach ($menu as $item)
+                    @if ($item->location == 'Main Menu right')
+                        <a href="{{ $item->menu_link }}" target="{{ $item->menu_link_target }}">{{ $item->menu_name }}</a>
+                    @endif
+                    @endforeach
                 </div>
             </div>
         </nav>
@@ -89,23 +103,22 @@
                 <div class="col-md-3">
                     <h5>Quick Links</h5>
                     <ul>
-                        <li><a href="#!">Home</a></li>
-                        <li><a href="#!">Providers</a></li>
-                        <li><a href="#!">Locations</a></li>
-                        <li><a href="#!">Health Blog</a></li>
-                        <li><a href="#!">Testimonials</a></li>
-                        <li><a href="#!">About Us</a></li>
-                        <li><a href="#!">Contact Us</a></li>
-                        <li><a href="#!">Departments</a></li>
-                        <li><a href="#!">Delete Account</a></li>
+                        @foreach ($menu as $item)
+                            @if ($item->location == 'Footer Quick Links')
+                                <li><a href="{{ $item->menu_link }}" target="{{ $item->menu_link_target }}">{{ $item->menu_name }}</a> </li>
+                            @endif
+                        @endforeach
                     </ul>
                 </div>
 
                 <div class="col-md-3">
                     <h5>Services</h5>
                     <ul>
-                        <li><a href="#!">Video Consultation</a></li>
-                        <li><a href="#!">In-Person Consultation</a></li>
+                        @foreach ($menu as $item)
+                            @if ($item->location == 'Footer Services')
+                                <li><a href="{{ $item->menu_link }}" target="{{ $item->menu_link_target }}">{{ $item->menu_name }}</a> </li>
+                            @endif
+                        @endforeach
                     </ul>
                 </div>
 

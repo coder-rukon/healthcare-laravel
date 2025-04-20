@@ -7,20 +7,19 @@ use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
-    public function Index()
+    public function Index($location = 'main_menu',Request $request )
     {
-        $data = MenuModel::orderBy('menu_order', 'ASC')->paginate(10);
-        return view('admin.menu',['data' => $data]);
+        // Fetch menu items based on the location
+        $data = MenuModel::where('location', $location)->orderBy('menu_order', 'ASC')->paginate(10);
+        return view('admin.menu',['data' => $data, 'location' => $location]);
     }
-    public function create()
-    {
-        return view('menu.create');
-    }
-    public function store(Request $request)
+
+    public function store( $location = 'main_menu',Request $request )
     {
         // Validate and store the menu item
         $request->validate([
             'menu_name' => 'required|string|max:255',
+            'location' => $location,
             'menu_link' => 'required',
             'menu_link_target' => 'string|max:10',
             'menu_order' => 'integer',
@@ -28,9 +27,11 @@ class MenuController extends Controller
         ]);
 
         // Store the menu item in the database
-        MenuModel::create($request->all());
+        $menu = MenuModel::create($request->all());
+        $menu->location = $location;
+        $menu->save();
 
-        return redirect()->route('admin.menu')->with('success', 'Menu item created successfully.');
+        return redirect()->route('admin.menu',['location'=>$location])->with('success', 'Menu item created successfully.');
     }
     public function delete($id)
     {

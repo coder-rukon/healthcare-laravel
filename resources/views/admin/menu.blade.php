@@ -1,8 +1,9 @@
 @extends('layouts.app')
 @section('content')
     
-    <form class="mt-4 mb-4" action="{{route('menu.create')}}" method="POST">
+    <form class="mt-4 mb-4" action="{{route('menu.create',['location' => $location])}}" method="POST">
         @csrf
+        <h1 class="mt-4 mb-4">{{$location}}</h1>
         <div  class="row">
             <div class="col mb-3">
                 <label for="exampleInputEmail1" class="form-label">Menu Name</label>

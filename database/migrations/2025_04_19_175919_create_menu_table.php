@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('menu', function (Blueprint $table) {
             $table->id('menu_id');
             $table->string('menu_name');
+            $table->string('location')->default('main_menu');
             $table->string('menu_link');
             $table->string('menu_link_target')->default('_self');
             $table->integer('menu_order')->default(0);
