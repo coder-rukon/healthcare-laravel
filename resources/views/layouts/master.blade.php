@@ -1,5 +1,10 @@
 @php
     $menu = App\Models\MenuModel::orderBy('menu_order', 'ASC')->get();
+    $settingsData = App\Models\SettingsModel::all();
+    $settings = [];
+    foreach ($settingsData as $item) {
+        $settings[$item->settings_name] = $item->settings_value;
+    }
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -44,13 +49,13 @@
             </div>
             <div class="header_right">
                 <input type="search" class="form-control form-control-sm w-auto" placeholder="search" />
-                <a href="#" class="btn">Book Appointment</a>
+                <a href="{{isset($settings['book_appointment_link']) ? $settings['book_appointment_link'] : '' }}" class="btn">Book Appointment</a>
                 <a href="#!">
                     <img class="img-fluid" src="assets/images/WhatsApp_icon.png" alt="">
                 </a>
                 <div class="helpline">
                     <h6>Patient Helpline</h6>
-                    <span>+91 06600 12345</span>
+                    <span>{{isset($settings['header_whatsapp']) ? $settings['header_whatsapp'] : '' }}</span>
                 </div>
             </div>
         </div>
@@ -89,14 +94,13 @@
 
                 <div class="col-md-3">
                     <h5>Contact Us</h5>
-                    <h4>Healthcare Scan Diagnostics</h4>
-                    <p><a href="tel:+917890015555">+91 7890015555</a></p>
-                    <p><a href="mailto:contact@healthcarescan.in">contact@healthcarescan.in</a></p>
+                    {!!isset($settings['contact_us_info']) ? $settings['contact_us_info'] : '' !!}
+                    
                     <div class="d-flex gap-3 mt-3">
-                        <a href="#!"><i class="bi bi-facebook"></i></a>
-                        <a href="#!"><i class="bi bi-instagram"></i></a>
-                        <a href="#!"><i class="bi bi-youtube"></i></a>
-                        <a href="#!"><i class="bi bi-linkedin"></i></a>
+                        {!!isset($settings['facebook_link']) ? '<a target="_blank" href="'.$settings['facebook_link'].'"><i class="bi bi-facebook"></i></a>' : '' !!}
+                        {!!isset($settings['instagram_link']) ? '<a target="_blank" href="'.$settings['instagram_link'].'"><i class="bi bi-instagram"></i></a>' : '' !!}
+                        {!!isset($settings['youtube_link']) ? '<a target="_blank" href="'.$settings['youtube_link'].'"><i class="bi bi-youtube"></i></a>' : '' !!}
+                        {!!isset($settings['linkedin_link']) ? '<a target="_blank" href="'.$settings['linkedin_link'].'"><i class="bi bi-linkedin"></i></a>' : '' !!}
                     </div>
                 </div>
 
@@ -124,16 +128,12 @@
 
                 <div class="col-md-3">
                     <p>
-                        You can also stay connected with
-                        <br>
-                        Providers using free
-                        <br>
-                        Healthcare scan Diagnostics App
+                        {!!isset($settings['app_links_tilte']) ? $settings['app_links_tilte'] : '' !!}
                     </p>
                     <p class="app_icon mt-3">
-                        <a href="#!"><i class="bi bi-apple"></i> <span>Apple Store</span></a>
+                        <a href="{{isset($settings['app_appstore_link']) ? $settings['app_appstore_link'] : '#' }}"><i class="bi bi-apple"></i> <span>Apple Store</span></a>
                         | &nbsp;
-                        <a href="#!"><i class="bi bi-android2"></i> <span>Google Play</span></a>
+                        <a href="{{isset($settings['app_playstore_link']) ? $settings['app_playstore_link'] : '#' }}"><i class="bi bi-android2"></i> <span>Google Play</span></a>
                     </p>
                 </div>
 
